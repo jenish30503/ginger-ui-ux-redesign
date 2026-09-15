@@ -33,7 +33,9 @@ export function ProfileView() {
         description={`${p.role} · ${p.niche} creator based in ${p.location}`}
       >
         <Link href="/profile/account">
-          <Button variant="outline"><Settings className="size-4" /> Account Settings</Button>
+          <Button variant="outline" className="gap-2">
+            <Settings className="size-4" /> Account Settings
+          </Button>
         </Link>
       </PageHeading>
 
@@ -44,72 +46,87 @@ export function ProfileView() {
               <div className="flex items-center gap-4">
                 <Avatar name={p.name} large />
                 <div>
-                  <h2 className="text-xl font-bold">{p.name}</h2>
-                  <p className="text-xs text-primary font-medium">{p.handle}</p>
-                  <p className="text-xs muted flex items-center gap-1 mt-1"><MapPin className="size-3" /> {p.location}</p>
+                  <h2 className="text-xl font-bold text-slate-900">{p.name}</h2>
+                  <p className="text-xs font-semibold text-sky-600">{p.handle}</p>
+                  <p className="text-xs muted flex items-center gap-1 mt-1">
+                    <MapPin className="size-3" /> {p.location}
+                  </p>
                 </div>
               </div>
-              <Button variant="outline" size="sm" onClick={() => setEditing(!editing)}>
+              <Button variant="outline" size="sm" onClick={() => setEditing(!editing)} className="gap-1.5">
                 <Edit2 className="size-3.5" /> {editing ? 'Cancel' : 'Edit profile'}
               </Button>
             </div>
 
             {editing ? (
-              <form onSubmit={handleSave} className="flex flex-col gap-4 border-t pt-4">
+              <form onSubmit={handleSave} className="flex flex-col gap-4 border-t border-border pt-4">
                 <FieldGroup>
                   <TextField label="Full Name" value={name} onChange={setName} required />
                   <TextField label="Social Handle" value={handle} onChange={setHandle} required />
                   <TextField label="Location" value={location} onChange={setLocation} required />
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold">Bio</label>
+                    <label className="text-xs font-semibold text-slate-700">Bio</label>
                     <textarea
                       value={bio}
-                      onChange={e => setBio(e.target.value)}
-                      className="rounded-xl border p-3 text-xs focus:outline-none focus:ring-2 focus:ring-primary"
+                      onChange={(e) => setBio(e.target.value)}
+                      className="rounded-xl border border-border bg-slate-50/50 p-3 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white"
                       rows={3}
+                      placeholder="Tell brands about yourself..."
                     />
                   </div>
                 </FieldGroup>
-                <Button type="submit">Save changes</Button>
+                <Button type="submit" className="bg-sky-600 hover:bg-sky-700 text-white w-fit">
+                  Save changes
+                </Button>
               </form>
             ) : (
-              <div className="border-t pt-4">
+              <div className="border-t border-border pt-4">
                 <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">About</h3>
-                <p className="text-sm leading-relaxed">{p.bio}</p>
+                <p className="text-sm leading-relaxed text-slate-700">{p.bio || 'No bio provided yet.'}</p>
               </div>
             )}
           </div>
 
           <div className="panel panel-pad">
-            <h3 className="text-base font-semibold mb-4">Portfolio & Content Highlights</h3>
+            <h3 className="text-base font-semibold text-slate-900 mb-4">Portfolio & Content Highlights</h3>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {[1, 2, 3].map(i => (
-                <div key={i} className="aspect-[9/16] rounded-xl bg-slate-100 flex flex-col items-center justify-center p-4 border text-center">
-                  <Sparkles className="size-6 text-primary mb-2" />
-                  <p className="text-xs font-semibold">Demo Video #{i}</p>
-                  <p className="text-[10px] muted mt-1">45.2k views</p>
+              {[
+                { id: 1, title: 'Demo Video #1', views: '45.2k views' },
+                { id: 2, title: 'Brand UGC Reel', views: '89.1k views' },
+                { id: 3, title: 'Product Review', views: '128.4k views' },
+              ].map((video) => (
+                <div
+                  key={video.id}
+                  className="aspect-[9/16] rounded-xl bg-slate-50 flex flex-col items-center justify-center p-4 border border-border text-center relative overflow-hidden group hover:border-slate-300 hover:bg-sky-50/30 transition-all"
+                >
+                  <div className="size-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                    <Sparkles className="size-5" />
+                  </div>
+                  <p className="text-xs font-semibold text-slate-800">{video.title}</p>
+                  <p className="text-[11px] text-muted-foreground font-mono mt-1">{video.views}</p>
                 </div>
               ))}
             </div>
           </div>
         </div>
 
-        <aside className="panel panel-pad flex flex-col gap-5">
-          <h3 className="text-sm font-semibold border-b pb-3">Creator Overview</h3>
-          <div className="flex justify-between text-xs">
-            <span className="muted">Role</span>
-            <span className="font-medium">{p.role}</span>
+        <aside className="panel panel-pad flex flex-col gap-5 h-fit">
+          <h3 className="text-sm font-semibold border-b border-border pb-3 text-slate-900">Creator Overview</h3>
+          <div className="flex justify-between text-xs items-center">
+            <span className="text-muted-foreground">Role</span>
+            <span className="text-xs font-medium bg-slate-100 text-slate-800 px-2 py-0.5 rounded-md">{p.role}</span>
           </div>
-          <div className="flex justify-between text-xs">
-            <span className="muted">Primary Niche</span>
-            <span className="font-medium">{p.niche}</span>
+          <div className="flex justify-between text-xs items-center">
+            <span className="text-muted-foreground">Primary Niche</span>
+            <span className="text-xs font-medium bg-sky-50 text-sky-700 px-2 py-0.5 rounded-md">{p.niche}</span>
           </div>
-          <div className="flex justify-between text-xs">
-            <span className="muted">Verification Status</span>
-            <span className="text-success font-medium flex items-center gap-1"><Check className="size-3" /> Verified Demo</span>
+          <div className="flex justify-between text-xs items-center">
+            <span className="text-muted-foreground">Verification Status</span>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-md flex items-center gap-1.5"><Check className="size-3 stroke-[2.5]" /> Verified Demo</span>
           </div>
-          <div className="border-t pt-4">
-            <Link href="/profile/payments" className="link-blue text-xs font-medium">
+          
+          <div className="border-t border-border pt-4">
+            <Link href="/profile/payments" className="link-blue text-xs font-medium inline-flex items-center gap-1 hover:underline">
               Manage Payment Destinations →
             </Link>
           </div>
