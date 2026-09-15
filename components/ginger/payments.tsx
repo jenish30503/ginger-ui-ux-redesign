@@ -9,162 +9,104 @@ import { PageHeading, TextField, PendingButton, DemoNotice } from './shared'
 
 export function PaymentVerificationView() {
   const state = useDemo()
-  const [accountHolder, setAccountHolder] = useState('Alex Morgan')
-  const [accountNumber, setAccountNumber] = useState('')
-  const [ifsc, setIfsc] = useState('')
-  const [upi, setUpi] = useState('alex@demoupi')
-  const [branchLookup, setBranchLookup] = useState<string | null>(null)
-  const [filePreview, setFilePreview] = useState<string | null>(null)
-  const [fileError, setFileError] = useState('')
+  const [accountHolder, setAccountHolder] = useState('John Doe')
+  const [upi, setUpi] = useState('john@ok')
+  const [error, setError] = useState('')
   const [pending, setPending] = useState(false)
-
-  const handleIfscChange = (val: string) => {
-    const uppercase = val.toUpperCase()
-    setIfsc(uppercase)
-    if (uppercase.length === 11) {
-      setBranchLookup('HDFC Bank Ltd · Bandra West Branch, Mumbai')
-    } else {
-      setBranchLookup(null)
-    }
-  }
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    setFileError('')
-    if (!file) return
-
-    if (!['image/jpeg', 'image/png', 'application/pdf'].includes(file.type)) {
-      setFileError('File must be JPG, PNG, or PDF.')
-      return
-    }
-    if (file.size > 5 * 1024 * 1024) {
-      setFileError('File size must be under 5MB.')
-      return
-    }
-
-    const previewUrl = URL.createObjectURL(file)
-    setFilePreview(previewUrl)
-    toast.success('Temporary ID document loaded in memory')
-  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    setPending(true)
-    await new Promise(r => setTimeout(r, 400))
     
-    // Mask sensitive details before saving to demo store
-    const masked = accountNumber.length >= 4 
-      ? `Demo Bank •••• ${accountNumber.slice(-4)}`
-      : upi || 'Verified Demo Payout Destination'
-      
-    state.updateProfile({ destination: masked })
+    // Validate UPI ID
+    if (!upi.includes('@')) {
+      setError('Please enter a valid UPI handle')
+      return
+    }
+    
+    setError('')
+    setPending(true)
+    
+    // Simulate network delay
+    await new Promise(r => setTimeout(r, 1500))
+    
+    state.updateProfile({ destination: upi })
     setPending(false)
-    toast.success('Payout destination verified and updated!')
+    toast.success('Payment settings updated successfully!')
   }
 
   return (
-    <>
-      <PageHeading
-        eyebrow="VERIFICATION & PAYOUTS"
-        title="Payment Destinations"
-        description="Verify your bank details or UPI ID for milestone payouts."
-      />
-
-      <div className="two-col">
-        <form onSubmit={handleSubmit} className="panel panel-pad flex flex-col gap-6">
-          <div className="rounded-xl border border-warning/30 bg-warning/5 p-4 flex gap-3 text-xs text-foreground">
-            <AlertTriangle className="size-5 shrink-0 text-warning mt-0.5" />
-            <div>
-              <strong className="font-semibold block">Demo Security Warning</strong>
-              <p className="mt-1 muted">
-                Please enter fictional demo information only. Do not input real bank account numbers, PAN, or real identity documents.
-              </p>
-            </div>
+    <div className="flex min-h-[calc(100vh-140px)] items-center justify-center p-4">
+      <form onSubmit={handleSubmit} className="w-full max-w-xl rounded-3xl bg-white p-8 sm:p-12 shadow-sm border border-slate-100">
+        <div className="flex flex-col gap-6">
+          <div>
+            <h2 className="text-2xl font-bold text-slate-900">Payment Settings</h2>
+            <p className="mt-2.5 text-sm leading-relaxed text-slate-500">
+              Configure your primary payout details below. These credentials are used for automatically processing brand sponsorships.
+            </p>
           </div>
 
-          <FieldGroup>
-            <TextField
-              label="Account Holder Name"
-              value={accountHolder}
-              onChange={setAccountHolder}
-              placeholder="Full name as on bank record"
-              required
-            />
-            <TextField
-              label="Bank Account Number (Fictional)"
-              type="password"
-              value={accountNumber}
-              onChange={setAccountNumber}
-              placeholder="e.g. 987654321012"
-              required
-            />
-            <TextField
-              label="IFSC Code (11 characters)"
-              value={ifsc}
-              onChange={handleIfscChange}
-              placeholder="e.g. HDFC0001234"
-              maxLength={11}
-              required
-            />
-            {branchLookup && (
-              <div className="rounded-lg bg-secondary p-3 text-xs flex items-center gap-2 text-primary font-medium">
-                <Building2 className="size-4" /> {branchLookup}
-              </div>
-            )}
-            <TextField
-              label="UPI ID (Optional)"
-              value={upi}
-              onChange={setUpi}
-              placeholder="e.g. name@upi"
-            />
-          </FieldGroup>
-
-          <div className="border-t pt-5">
-            <label className="text-xs font-semibold block mb-2">Simulated ID Verification Document</label>
-            <div className="border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary/50 transition">
+          <div className="flex flex-col gap-5 mt-2">
+            <div className="flex flex-col gap-2">
+              <label htmlFor="holderName" className="text-xs font-bold text-slate-700">Account Holder Name</label>
               <input
-                type="file"
-                id="id-upload"
-                onChange={handleFileUpload}
-                accept="image/jpeg,image/png,application/pdf"
-                className="hidden"
+                id="holderName"
+                type="text"
+                value={accountHolder}
+                onChange={e => setAccountHolder(e.target.value)}
+                placeholder="John Doe"
+                className="h-12 rounded-xl border border-slate-200 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+                required
               />
-              <label htmlFor="id-upload" className="cursor-pointer flex flex-col items-center gap-2">
-                <Upload className="size-6 text-muted-foreground" />
-                <span className="text-xs font-semibold text-primary">Click to select demo ID image</span>
-                <span className="text-[10px] muted">Supports JPG, PNG, PDF up to 5MB</span>
-              </label>
             </div>
-            {fileError && <p className="text-xs text-destructive mt-2">{fileError}</p>}
-            {filePreview && (
-              <div className="mt-3 flex items-center gap-3 rounded-lg border p-2 bg-slate-50">
-                <span className="text-xs font-medium text-success flex items-center gap-1">
-                  <Check className="size-4" /> ID document loaded (temporary memory)
-                </span>
-              </div>
+
+            <div className="flex flex-col gap-2">
+              <label htmlFor="upiId" className="text-xs font-bold text-slate-700">UPI ID</label>
+              <input
+                id="upiId"
+                type="text"
+                value={upi}
+                onChange={e => {
+                  setUpi(e.target.value)
+                  if (error) setError('')
+                }}
+                placeholder="e.g. name@bank"
+                className={`h-12 rounded-xl border px-4 text-sm transition focus:outline-none focus:ring-1 ${
+                  error 
+                    ? 'border-red-300 bg-red-50/30 text-slate-900 focus:border-red-400 focus:ring-red-400' 
+                    : 'border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500'
+                }`}
+                required
+              />
+              {error && (
+                <div className="mt-1 flex items-center gap-1.5 text-xs font-medium text-red-500">
+                  <AlertTriangle className="size-3.5" />
+                  {error}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            disabled={pending}
+            className={`mt-4 flex h-12 w-full items-center justify-center rounded-xl font-semibold text-white transition-all ${
+              pending ? 'bg-blue-400' : 'bg-[#2563eb] hover:bg-blue-700'
+            }`}
+          >
+            {pending ? (
+              <>
+                <svg className="mr-2 size-4 animate-spin text-white" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Saving...
+              </>
+            ) : (
+              'Save Changes'
             )}
-          </div>
-
-          <PendingButton pending={pending}>Verify & Save Destination</PendingButton>
-        </form>
-
-        <aside className="panel panel-pad flex flex-col gap-5">
-          <h3 className="text-sm font-semibold border-b pb-3">Active Destination</h3>
-          <div className="rounded-xl border bg-background p-4">
-            <div className="flex items-center gap-2 text-xs font-semibold text-success">
-              <ShieldCheck className="size-4" /> Current Verified Account
-            </div>
-            <p className="mt-2 text-sm font-semibold">{state.profile.destination || 'No destination set'}</p>
-            <p className="mt-1 text-[10px] muted">Milestone earnings are credited directly to this demo destination.</p>
-          </div>
-
-          <div className="flex gap-2 text-[10px] leading-relaxed muted">
-            <Lock className="size-4 shrink-0 text-primary mt-0.5" />
-            Raw bank details and uploaded file objects are never persisted or uploaded to any server.
-          </div>
-          <DemoNotice>Only masked demo status is stored in browser state.</DemoNotice>
-        </aside>
-      </div>
-    </>
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }
