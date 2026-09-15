@@ -23,6 +23,9 @@ type Demo = ReturnType<typeof seed> & {
   unblock: (handle: string) => void
   setBanners: (banners: string[]) => void
   readAlerts: () => void
+  signIn: (email: string, role?: string) => void
+  completeOnboarding: (details: { role: string; handle: string; niche: string }) => void
+  setRole: (role: string) => void
   reset: () => void
 }
 export const useDemo = create<Demo>()(persist((set, get) => ({
@@ -72,5 +75,8 @@ export const useDemo = create<Demo>()(persist((set, get) => ({
   approveWithdrawals: (ids) => set(s => ({ transactions: s.transactions.map(x => ids.includes(x.id) && x.type === 'Withdrawals' ? { ...x, status: 'Completed' } : x) })),
   unblock: (handle) => set(s => ({ blocked: s.blocked.filter(x => x !== handle) })),
   setBanners: (banners) => set({ banners }), readAlerts: () => set({ readNotifications: true }),
+  signIn: (email, role = 'Creator') => set(s => ({ profile: { ...s.profile, role } })),
+  completeOnboarding: ({ role, handle, niche }) => set(s => ({ profile: { ...s.profile, role, handle, niche } })),
+  setRole: (role) => set(s => ({ profile: { ...s.profile, role } })),
   reset: () => set(seed()),
 }), { name: 'ginger-demo-v1', version: 1, skipHydration: true }))
