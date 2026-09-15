@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useDemo } from '@/store/ginger'
 import { PageHeading, Avatar } from './shared'
-import { MessageScroller } from '@/components/ui/message-scroller'
+import { MessageScrollerProvider, MessageScroller, MessageScrollerViewport, MessageScrollerContent, MessageScrollerItem } from '@/components/ui/message-scroller'
 import { Message } from '@/components/ui/message'
 import { Bubble } from '@/components/ui/bubble'
 import { Attachment } from '@/components/ui/attachment'
@@ -103,15 +103,23 @@ export function Inbox() {
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 bg-slate-50">
-              <MessageScroller>
-                {active.messages.map(m => (
-                  <Message key={m.id} align={m.mine ? 'end' : 'start'}>
-                    <Bubble variant={m.mine ? 'default' : 'secondary'}>
-                      {m.text}
-                    </Bubble>
-                  </Message>
-                ))}
-              </MessageScroller>
+              <MessageScrollerProvider>
+                <MessageScroller>
+                  <MessageScrollerViewport>
+                    <MessageScrollerContent>
+                      {active.messages.map(m => (
+                        <MessageScrollerItem key={m.id}>
+                          <Message align={m.mine ? 'end' : 'start'}>
+                            <Bubble variant={m.mine ? 'default' : 'secondary'}>
+                              {m.text}
+                            </Bubble>
+                          </Message>
+                        </MessageScrollerItem>
+                      ))}
+                    </MessageScrollerContent>
+                  </MessageScrollerViewport>
+                </MessageScroller>
+              </MessageScrollerProvider>
             </div>
 
             {/* Input Form */}
