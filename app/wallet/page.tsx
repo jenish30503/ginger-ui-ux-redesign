@@ -1,4 +1,4 @@
-import { Wallet } from '@/components/ginger/wallet'
+import { WalletPage as Wallet } from '@/components/ginger/wallet'
 
 export default function WalletPage() {
   return <Wallet />

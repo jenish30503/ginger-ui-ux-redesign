@@ -162,7 +162,7 @@ export function PaymentVerificationView() {
             <Lock className="size-4 shrink-0 text-primary mt-0.5" />
             Raw bank details and uploaded file objects are never persisted or uploaded to any server.
           </div>
-          <DemoNotice message="Only masked demo status is stored in browser state." />
+          <DemoNotice>Only masked demo status is stored in browser state.</DemoNotice>
         </aside>
       </div>
     </>

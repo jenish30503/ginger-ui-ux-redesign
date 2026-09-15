@@ -42,7 +42,7 @@ export function ProfileView() {
           <div className="panel panel-pad flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <Avatar name={p.name} className="size-16 text-lg font-bold" />
+                <Avatar name={p.name} large />
                 <div>
                   <h2 className="text-xl font-bold">{p.name}</h2>
                   <p className="text-xs text-primary font-medium">{p.handle}</p>
@@ -113,7 +113,7 @@ export function ProfileView() {
               Manage Payment Destinations →
             </Link>
           </div>
-          <DemoNotice message="Profile information is saved locally in browser state." />
+          <DemoNotice>Profile information is saved locally in browser state.</DemoNotice>
         </aside>
       </div>
     </>

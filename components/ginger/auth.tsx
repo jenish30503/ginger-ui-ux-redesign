@@ -103,7 +103,7 @@ export function LoginView() {
           </Button>
         </form>
 
-        <DemoNotice message="This is a simulated authentication screen for prototyping. No password or real account required." />
+        <DemoNotice>This is a simulated authentication screen for prototyping. No password or real account required.</DemoNotice>
       </div>
     </div>
   )
@@ -233,9 +233,9 @@ export function OnboardingView() {
             </div>
             <div className="flex gap-3 mt-4">
               <Button variant="outline" onClick={() => setStep(2)}>Back</Button>
-              <PendingButton pending={pending} onClick={handleComplete}>
+              <Button onClick={handleComplete} disabled={pending}>
                 Complete setup <Check className="size-4" />
-              </PendingButton>
+              </Button>
             </div>
           </div>
         )}

@@ -98,14 +98,14 @@ export function Inbox() {
                   <p className="text-xs muted">{active.context}</p>
                 </div>
               </div>
-              <Marker variant="secondary">Demo Chat</Marker>
+              <Marker variant="border">Demo Chat</Marker>
             </div>
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-6 bg-slate-50">
               <MessageScroller>
                 {active.messages.map(m => (
-                  <Message key={m.id} align={m.mine ? 'right' : 'left'}>
+                  <Message key={m.id} align={m.mine ? 'end' : 'start'}>
                     <Bubble variant={m.mine ? 'default' : 'secondary'}>
                       {m.text}
                     </Bubble>
