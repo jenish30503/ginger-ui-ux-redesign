@@ -1,13 +1,12 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
-import { User, Settings, MapPin, Sparkles, Check, Edit2, ShieldCheck } from 'lucide-react'
+import { Settings, MapPin, Sparkles, Check, Edit2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { FieldGroup } from '@/components/ui/field'
 import { useDemo } from '@/store/ginger'
-import { PageHeading, Avatar, TextField, PendingButton, DemoNotice } from './shared'
+import { PageHeading, Avatar, TextField, DemoNotice } from './shared'
 
 export function ProfileView() {
   const state = useDemo()
@@ -41,6 +40,7 @@ export function ProfileView() {
 
       <div className="two-col">
         <div className="flex flex-col gap-6">
+          {/* Profile Card */}
           <div className="panel panel-pad flex flex-col gap-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
@@ -48,7 +48,7 @@ export function ProfileView() {
                 <div>
                   <h2 className="text-xl font-bold text-slate-900">{p.name}</h2>
                   <p className="text-xs font-semibold text-sky-600">{p.handle}</p>
-                  <p className="text-xs muted flex items-center gap-1 mt-1">
+                  <p className="text-xs text-muted-foreground flex items-center gap-1 mt-1">
                     <MapPin className="size-3" /> {p.location}
                   </p>
                 </div>
@@ -69,9 +69,9 @@ export function ProfileView() {
                     <textarea
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
-                      className="rounded-xl border border-border bg-slate-50/50 p-3 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white"
+                      className="rounded-xl border border-border bg-slate-50/50 p-3 text-xs focus:outline-none focus:ring-2 focus:ring-sky-500 focus:bg-white transition-all"
                       rows={3}
-                      placeholder="Tell brands about yourself..."
+                      placeholder="Tell brands about your content..."
                     />
                   </div>
                 </FieldGroup>
@@ -87,22 +87,23 @@ export function ProfileView() {
             )}
           </div>
 
+          {/* Portfolio Highlights */}
           <div className="panel panel-pad">
             <h3 className="text-base font-semibold text-slate-900 mb-4">Portfolio & Content Highlights</h3>
             <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
               {[
                 { id: 1, title: 'Demo Video #1', views: '45.2k views' },
-                { id: 2, title: 'Brand UGC Reel', views: '89.1k views' },
+                { id: 2, title: 'Brand UGC Reel', views: '82.0k views' },
                 { id: 3, title: 'Product Review', views: '128.4k views' },
               ].map((video) => (
                 <div
                   key={video.id}
-                  className="aspect-[9/16] rounded-xl bg-slate-50 flex flex-col items-center justify-center p-4 border border-border text-center relative overflow-hidden group hover:border-slate-300 hover:bg-sky-50/30 transition-all"
+                  className="aspect-[9/16] rounded-xl bg-slate-50 flex flex-col items-center justify-center p-4 border border-border text-center relative group hover:border-sky-300 hover:bg-sky-50/30 transition-all"
                 >
-                  <div className="size-10 rounded-full bg-sky-100 text-sky-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
+                  <div className="size-10 rounded-full bg-sky-100/70 text-sky-600 flex items-center justify-center mb-2.5 group-hover:scale-105 transition-transform">
                     <Sparkles className="size-5" />
                   </div>
-                  <p className="text-xs font-semibold text-slate-800">{video.title}</p>
+                  <p className="text-xs font-semibold text-slate-900">{video.title}</p>
                   <p className="text-[11px] text-muted-foreground font-mono mt-1">{video.views}</p>
                 </div>
               ))}
@@ -110,21 +111,23 @@ export function ProfileView() {
           </div>
         </div>
 
+        {/* Sidebar */}
         <aside className="panel panel-pad flex flex-col gap-5 h-fit">
           <h3 className="text-sm font-semibold border-b border-border pb-3 text-slate-900">Creator Overview</h3>
-          <div className="flex justify-between text-xs items-center">
+          <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground">Role</span>
-            <span className="text-xs font-medium bg-slate-100 text-slate-800 px-2 py-0.5 rounded-md">{p.role}</span>
+            <span className="font-medium bg-slate-100 text-slate-800 px-2 py-0.5 rounded-md">{p.role}</span>
           </div>
-          <div className="flex justify-between text-xs items-center">
+          <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground">Primary Niche</span>
-            <span className="text-xs font-medium bg-sky-50 text-sky-700 px-2 py-0.5 rounded-md">{p.niche}</span>
+            <span className="font-medium bg-sky-50 text-sky-700 px-2 py-0.5 rounded-md">{p.niche}</span>
           </div>
-          <div className="flex justify-between text-xs items-center">
+          <div className="flex justify-between items-center text-xs">
             <span className="text-muted-foreground">Verification Status</span>
-            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-md flex items-center gap-1.5"><Check className="size-3 stroke-[2.5]" /> Verified Demo</span>
+            <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/70 px-2 py-0.5 rounded-md flex items-center gap-1">
+              <Check className="size-3 stroke-[2.5]" /> Verified Demo
+            </span>
           </div>
-          
           <div className="border-t border-border pt-4">
             <Link href="/profile/payments" className="link-blue text-xs font-medium inline-flex items-center gap-1 hover:underline">
               Manage Payment Destinations →
