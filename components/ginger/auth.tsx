@@ -128,74 +128,74 @@ export function OnboardingView() {
   }
 
   return (
-    <div className="container-main max-w-xl py-12">
-      <div className="panel panel-pad flex flex-col gap-6">
-        <div className="flex items-center justify-between border-b pb-4">
-          <div>
-            <p className="eyebrow">STEP {step} OF 3</p>
-            <h1 className="text-xl font-bold">Welcome setup</h1>
+    <div className="flex min-h-[calc(100vh-140px)] items-center justify-center p-4">
+      <div className="w-full max-w-2xl rounded-3xl bg-white p-8 sm:p-12 shadow-sm border border-slate-100">
+        <div className="flex flex-col gap-1 mb-8">
+          <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-blue-600">
+            <span>STEP {step} OF 3</span>
+            <span className="text-slate-500">{Math.round((step/3)*100)}% Completed</span>
           </div>
-          <div className="flex gap-1.5">
-            {[1, 2, 3].map(s => (
-              <span
-                key={s}
-                className={`h-2 rounded-full transition-all ${
-                  s === step ? 'w-6 bg-primary' : s < step ? 'w-2 bg-success' : 'w-2 bg-muted'
-                }`}
-              />
-            ))}
+          <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-slate-100">
+             <div className="h-full bg-blue-600 transition-all duration-300" style={{ width: `${(step/3)*100}%` }} />
           </div>
         </div>
 
         {step === 1 && (
-          <div className="flex flex-col gap-5">
-            <h2 className="text-base font-semibold">How do you plan to use GINGER?</h2>
+          <div className="flex flex-col gap-8">
+            <div>
+               <h2 className="text-2xl font-bold text-slate-900">Welcome setup</h2>
+               <p className="mt-2.5 text-sm leading-relaxed text-slate-500">Choose your profile type to begin. We will customize your dashboard, tools, and recommendations based on your choice.</p>
+            </div>
+            
             <div className="grid gap-4 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={() => setRole('Creator')}
-                className={`flex flex-col items-start gap-3 rounded-2xl border p-5 text-left transition ${
+                className={`flex flex-col items-start gap-5 rounded-2xl border p-6 text-left transition-all ${
                   role === 'Creator'
-                    ? 'border-primary bg-secondary text-primary'
-                    : 'border-border bg-white text-foreground hover:border-foreground/20'
+                    ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500'
+                    : 'border-slate-200 bg-white hover:border-slate-300'
                 }`}
               >
-                <span className="flex size-10 items-center justify-center rounded-xl bg-white shadow-sm">
-                  <User className="size-5 text-primary" />
+                <span className={`flex size-12 items-center justify-center rounded-xl shadow-sm ${role === 'Creator' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                  <User className="size-5" />
                 </span>
                 <div>
-                  <strong className="block text-sm font-semibold">I&apos;m a Creator</strong>
-                  <p className="mt-1 text-xs muted">I want to create short videos for brands and earn payouts.</p>
+                  <strong className="block text-sm font-bold text-slate-900">I'm a Creator</strong>
+                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">Monetize your content, collaborate with world-class brands, and track campaign performance.</p>
                 </div>
               </button>
 
               <button
                 type="button"
                 onClick={() => setRole('Brand')}
-                className={`flex flex-col items-start gap-3 rounded-2xl border p-5 text-left transition ${
+                className={`flex flex-col items-start gap-5 rounded-2xl border p-6 text-left transition-all ${
                   role === 'Brand'
-                    ? 'border-primary bg-secondary text-primary'
-                    : 'border-border bg-white text-foreground hover:border-foreground/20'
+                    ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500'
+                    : 'border-slate-200 bg-white hover:border-slate-300'
                 }`}
               >
-                <span className="flex size-10 items-center justify-center rounded-xl bg-white shadow-sm">
-                  <Briefcase className="size-5 text-primary" />
+                <span className={`flex size-12 items-center justify-center rounded-xl shadow-sm ${role === 'Brand' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                  <Briefcase className="size-5" />
                 </span>
                 <div>
-                  <strong className="block text-sm font-semibold">I&apos;m a Brand</strong>
-                  <p className="mt-1 text-xs muted">I want to launch video campaigns and engage top creators.</p>
+                  <strong className="block text-sm font-bold text-slate-900">I'm a Brand</strong>
+                  <p className="mt-2 text-xs text-slate-500 leading-relaxed">Discover top tier creators, initiate partnership campaigns, and manage contract agreements.</p>
                 </div>
               </button>
             </div>
-            <Button className="mt-2" onClick={() => setStep(2)}>
-              Next step <ArrowRight className="size-4" />
+            <Button className="w-full bg-[#2563eb] hover:bg-blue-700 text-white h-12 rounded-xl font-semibold" onClick={() => setStep(2)}>
+              Next step <ArrowRight className="size-4 ml-2" />
             </Button>
           </div>
         )}
 
         {step === 2 && (
-          <div className="flex flex-col gap-5">
-            <h2 className="text-base font-semibold">Set your handle & identity</h2>
+          <div className="flex flex-col gap-6">
+            <div>
+               <h2 className="text-2xl font-bold text-slate-900">Set your handle & identity</h2>
+               <p className="mt-2 text-sm text-slate-500">Pick a unique handle that brands can use to find you.</p>
+            </div>
             <FieldGroup>
               <TextField
                 label="Social handle"
@@ -205,26 +205,29 @@ export function OnboardingView() {
                 required
               />
             </FieldGroup>
-            <div className="flex gap-3">
-              <Button variant="outline" onClick={() => setStep(1)}>Back</Button>
-              <Button className="flex-1" onClick={() => setStep(3)}>
-                Next step <ArrowRight className="size-4" />
+            <div className="flex gap-3 mt-2">
+              <Button variant="outline" className="h-12 rounded-xl px-6" onClick={() => setStep(1)}>Back</Button>
+              <Button className="flex-1 bg-[#2563eb] hover:bg-blue-700 text-white h-12 rounded-xl font-semibold" onClick={() => setStep(3)}>
+                Next step <ArrowRight className="size-4 ml-2" />
               </Button>
             </div>
           </div>
         )}
 
         {step === 3 && (
-          <div className="flex flex-col gap-5">
-            <h2 className="text-base font-semibold">Pick your primary niche</h2>
-            <div className="flex flex-wrap gap-2">
+          <div className="flex flex-col gap-6">
+            <div>
+               <h2 className="text-2xl font-bold text-slate-900">Pick your primary niche</h2>
+               <p className="mt-2 text-sm text-slate-500">Select the category that best fits your content style.</p>
+            </div>
+            <div className="flex flex-wrap gap-2.5">
               {['Beauty & skincare', 'Tech & gadgets', 'Lifestyle', 'Food & drinks', 'Fitness', 'Travel', 'Fashion', 'Gaming'].map(n => (
                 <button
                   key={n}
                   type="button"
                   onClick={() => setNiche(n)}
-                  className={`rounded-full border px-4 py-2 text-xs font-medium transition ${
-                    niche === n ? 'border-primary bg-primary text-white' : 'border-border bg-white hover:bg-muted'
+                  className={`rounded-full border px-5 py-2.5 text-xs font-semibold transition ${
+                    niche === n ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                   }`}
                 >
                   {n}
@@ -232,9 +235,9 @@ export function OnboardingView() {
               ))}
             </div>
             <div className="flex gap-3 mt-4">
-              <Button variant="outline" onClick={() => setStep(2)}>Back</Button>
-              <Button onClick={handleComplete} disabled={pending}>
-                Complete setup <Check className="size-4" />
+              <Button variant="outline" className="h-12 rounded-xl px-6" onClick={() => setStep(2)}>Back</Button>
+              <Button className="flex-1 bg-[#2563eb] hover:bg-blue-700 text-white h-12 rounded-xl font-semibold" onClick={handleComplete} disabled={pending}>
+                Complete setup <Check className="size-4 ml-2" />
               </Button>
             </div>
           </div>
