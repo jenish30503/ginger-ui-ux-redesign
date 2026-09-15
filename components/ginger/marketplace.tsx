@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { MapPin, BadgeCheck, ArrowUpRight, Instagram, Youtube, Users } from 'lucide-react'
+import { MapPin, BadgeCheck, ArrowUpRight, Users } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'

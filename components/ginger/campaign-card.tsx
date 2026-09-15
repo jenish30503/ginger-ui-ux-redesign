@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { ArrowUpRight, Bookmark, Clock3, ShieldCheck, Instagram, Youtube, Users } from 'lucide-react'
+import { ArrowUpRight, Bookmark, Clock3, ShieldCheck, Camera, PlaySquare, Users } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { useDemo } from '@/store/ginger'
