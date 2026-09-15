@@ -131,12 +131,12 @@ export function OnboardingView() {
     <div className="flex min-h-[calc(100vh-140px)] items-center justify-center p-4">
       <div className="w-full max-w-2xl rounded-3xl bg-white p-8 sm:p-12 shadow-sm border border-slate-100">
         <div className="flex flex-col gap-1 mb-8">
-          <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-blue-600">
+          <div className="flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-sky-600">
             <span>STEP {step} OF 3</span>
             <span className="text-slate-500">{Math.round((step/3)*100)}% Completed</span>
           </div>
           <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-slate-100">
-             <div className="h-full bg-blue-600 transition-all duration-300" style={{ width: `${(step/3)*100}%` }} />
+             <div className="h-full bg-sky-600 transition-all duration-300" style={{ width: `${(step/3)*100}%` }} />
           </div>
         </div>
 
@@ -153,11 +153,11 @@ export function OnboardingView() {
                 onClick={() => setRole('Creator')}
                 className={`flex flex-col items-start gap-5 rounded-2xl border p-6 text-left transition-all ${
                   role === 'Creator'
-                    ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500'
+                    ? 'border-sky-500 bg-sky-50/50 ring-1 ring-sky-500'
                     : 'border-slate-200 bg-white hover:border-slate-300'
                 }`}
               >
-                <span className={`flex size-12 items-center justify-center rounded-xl shadow-sm ${role === 'Creator' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                <span className={`flex size-12 items-center justify-center rounded-xl shadow-sm ${role === 'Creator' ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
                   <User className="size-5" />
                 </span>
                 <div>
@@ -171,11 +171,11 @@ export function OnboardingView() {
                 onClick={() => setRole('Brand')}
                 className={`flex flex-col items-start gap-5 rounded-2xl border p-6 text-left transition-all ${
                   role === 'Brand'
-                    ? 'border-blue-500 bg-blue-50/50 ring-1 ring-blue-500'
+                    ? 'border-sky-500 bg-sky-50/50 ring-1 ring-sky-500'
                     : 'border-slate-200 bg-white hover:border-slate-300'
                 }`}
               >
-                <span className={`flex size-12 items-center justify-center rounded-xl shadow-sm ${role === 'Brand' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
+                <span className={`flex size-12 items-center justify-center rounded-xl shadow-sm ${role === 'Brand' ? 'bg-sky-600 text-white' : 'bg-slate-100 text-slate-500'}`}>
                   <Briefcase className="size-5" />
                 </span>
                 <div>
@@ -184,7 +184,7 @@ export function OnboardingView() {
                 </div>
               </button>
             </div>
-            <Button className="w-full bg-[#2563eb] hover:bg-blue-700 text-white h-12 rounded-xl font-semibold" onClick={() => setStep(2)}>
+            <Button className="w-full bg-sky-600 hover:bg-sky-700 text-white h-12 rounded-xl font-semibold" onClick={() => setStep(2)}>
               Next step <ArrowRight className="size-4 ml-2" />
             </Button>
           </div>
@@ -207,7 +207,7 @@ export function OnboardingView() {
             </FieldGroup>
             <div className="flex gap-3 mt-2">
               <Button variant="outline" className="h-12 rounded-xl px-6" onClick={() => setStep(1)}>Back</Button>
-              <Button className="flex-1 bg-[#2563eb] hover:bg-blue-700 text-white h-12 rounded-xl font-semibold" onClick={() => setStep(3)}>
+              <Button className="flex-1 bg-sky-600 hover:bg-sky-700 text-white h-12 rounded-xl font-semibold" onClick={() => setStep(3)}>
                 Next step <ArrowRight className="size-4 ml-2" />
               </Button>
             </div>
@@ -227,7 +227,7 @@ export function OnboardingView() {
                   type="button"
                   onClick={() => setNiche(n)}
                   className={`rounded-full border px-5 py-2.5 text-xs font-semibold transition ${
-                    niche === n ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
+                    niche === n ? 'border-sky-600 bg-sky-600 text-white' : 'border-slate-200 bg-white hover:bg-slate-50 text-slate-700'
                   }`}
                 >
                   {n}
@@ -236,7 +236,7 @@ export function OnboardingView() {
             </div>
             <div className="flex gap-3 mt-4">
               <Button variant="outline" className="h-12 rounded-xl px-6" onClick={() => setStep(2)}>Back</Button>
-              <Button className="flex-1 bg-[#2563eb] hover:bg-blue-700 text-white h-12 rounded-xl font-semibold" onClick={handleComplete} disabled={pending}>
+              <Button className="flex-1 bg-sky-600 hover:bg-sky-700 text-white h-12 rounded-xl font-semibold" onClick={handleComplete} disabled={pending}>
                 Complete setup <Check className="size-4 ml-2" />
               </Button>
             </div>

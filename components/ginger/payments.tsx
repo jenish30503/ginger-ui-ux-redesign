@@ -54,7 +54,7 @@ export function PaymentVerificationView() {
                 value={accountHolder}
                 onChange={e => setAccountHolder(e.target.value)}
                 placeholder="John Doe"
-                className="h-12 rounded-xl border border-slate-200 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 transition"
+                className="h-12 rounded-xl border border-slate-200 px-4 text-sm text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:outline-none focus:ring-1 focus:ring-sky-500 transition"
                 required
               />
             </div>
@@ -73,7 +73,7 @@ export function PaymentVerificationView() {
                 className={`h-12 rounded-xl border px-4 text-sm transition focus:outline-none focus:ring-1 ${
                   error 
                     ? 'border-red-300 bg-red-50/30 text-slate-900 focus:border-red-400 focus:ring-red-400' 
-                    : 'border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-blue-500 focus:ring-blue-500'
+                    : 'border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-sky-500 focus:ring-sky-500'
                 }`}
                 required
               />
@@ -90,7 +90,7 @@ export function PaymentVerificationView() {
             type="submit"
             disabled={pending}
             className={`mt-4 flex h-12 w-full items-center justify-center rounded-xl font-semibold text-white transition-all ${
-              pending ? 'bg-blue-400' : 'bg-[#2563eb] hover:bg-blue-700'
+              pending ? 'bg-sky-400' : 'bg-sky-600 hover:bg-sky-700'
             }`}
           >
             {pending ? (
